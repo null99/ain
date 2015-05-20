@@ -8,15 +8,22 @@
 #ifndef LIBSAFEUDP_H
 #define	LIBSAFEUDP_H
 
-struct Mstruct{
-	char a;
-	int b;
-};
+#include <stdio.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#define SOCKBUF 1024
 
-extern void test();
-extern void test_with_argument(char *arg0);
-extern char* test_with_ptr_result();
-extern struct Mstruct* test_with_complex_result();
+extern void initserver(int port);
+extern void bindserver();
+extern char* readserver();
+extern void sendserver(char* mesg);
+
+extern void initclient(char* ip, int port);
+extern char* readclient();
+extern void sendclient(char* mesg);
 
 #endif	/* LIBSAFEUDP_H */
 

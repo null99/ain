@@ -1,7 +1,6 @@
 all:
 	gcc -o libsafeudp.so libsafeudp.c -shared -fPIC
-	gcc server.c -o server -ldl
-	gcc client.c -o client -ldl
+	gcc loader.c -o loader -ldl
 	@echo Compiling fertig. Starte...
-	./server &
-	./client
+	./loader
+
