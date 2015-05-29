@@ -14,16 +14,34 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#define SOCKBUF 1024
+#include <arpa/inet.h>
 
-extern void initserver(int port);
+// Turn on Debugmessages
+#undef DEBUG
+
+// Formula: MESG_TOKENLEN + MESG_MESSAGELEN = SOCKBUF
+#define SOCKBUF 1500 // = MTU
+#define MESG_TOKENLEN 16
+#define MESG_MESSAGELEN 1484
+
+/* Internal use */
+struct MESSAGE{
+	char token[MESG_TOKENLEN];
+	char mesg[MESG_MESSAGELEN];
+};
+
+struct MESSAGE* packmessage(char *inputstr);
+
+/* public Interfaces */
+extern void initserver(char *_token, char *ip, int port);
 extern void bindserver();
 extern char* readserver();
-extern void sendserver(char* mesg);
+extern void sendserver(char *mesg);
 
-extern void initclient(char* ip, int port);
+extern void initclient(char *_token, char *ip, int port);
 extern char* readclient();
-extern void sendclient(char* mesg);
+extern void sendclient(char *mesg);
+
 
 #endif	/* LIBSAFEUDP_H */
 

@@ -18,7 +18,7 @@
 
     void *handle;
 
-    void (*initclient)(char*, int);
+    void (*initclient)(char*, char*, int);
     char* (*readclient)();
     void (*sendclient)();
 
@@ -41,7 +41,7 @@
     }
 
 
-    (*initclient)("127.0.0.1", 32001);
+    (*initclient)("tokenpassword", "127.0.0.1", 32001);
 
     for(;;){
 
@@ -55,7 +55,17 @@
 
         // Empfange Nachricht vom Server
         char *mesg = (*readclient)();
+
+        // Checke if token was correct
+        if(mesg == NULL){
+            printf("Token was wrong. Aborting.\n");
+            exit(-1);
+        }
+
         printf("client: server says: %s\n", mesg);
+
+        //mesg = (*readclient)();
+        //printf("client: server says: %s\n", mesg);
 
         printf("-----------------------------\n");
 
